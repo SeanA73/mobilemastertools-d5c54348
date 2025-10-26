@@ -1,0 +1,40 @@
+You are an expert AI developer specializing in building innovative and user-centric productivity applications. I'm developing a Project Timer tool, a web-based application designed to help individuals and teams track their work hours, manage projects, and gain insights into their productivity.
+
+My goal is to make this tool highly appealing to a broad customer base, including freelancers, small businesses, and project managers. I want to integrate advanced features that go beyond basic time tracking.
+
+Your task is to propose and, where applicable, provide pseudo-code or conceptual code snippets (e.g., Python, JavaScript, or a relevant web framework like React/Node.js) for the following feature categories. Focus on how these features would integrate into a web application environment.
+
+I. Core Time Tracking Enhancements & User Experience:
+
+Objective: Improve the fundamental time tracking process and user interface for efficiency and clarity.
+Specifics to address:
+"Quick Switcher" Implementation: How would a user quickly switch between active projects/tasks with minimal clicks? Provide a UI concept and a high-level function for switchTask(newTaskId).
+Idle Time Detection & Prompting: Describe the logic for detecting inactivity (e.g., no mouse/keyboard input for X minutes) and how the user would be prompted to categorize or discard this time. Include a conceptual function detectIdleTime() and handleIdlePrompt(idleDuration).
+Manual Entry with Smart Suggestions: When a user manually adds time, how can the system suggest recent projects/tasks to speed up the process? Provide a pseudo-code for getRecentTasks() and a UI interaction idea.
+II. AI-Powered Insights & Automation:
+
+Objective: Leverage AI to provide deeper insights and automate repetitive tasks.
+Specifics to address:
+AI-Powered Categorization (Conceptual): Explain how an AI model could learn from user habits to automatically suggest or assign time entries to projects/tasks based on keywords in note fields or app usage (if integrated). Describe the high-level data flow and a conceptual predictCategory(timeEntryData) function.
+Predictive Task Duration: How can historical data be used to predict the duration of similar future tasks? Provide a conceptual data structure for historical task data and a pseudo-code for predictDuration(taskType, historicalData).
+Anomaly Detection in Time Logs: Propose a method to identify unusual time entries (e.g., a timer running for an unusually long period, or a task taking significantly less/more time than its historical average). Provide a high-level algorithm for detectAnomaly(timeEntry, historicalAverage).
+III. Reporting & Visualizations:
+
+Objective: Make data easily digestible and actionable through rich reports.
+Specifics to address:
+Dynamic Report Generation (Frontend/Backend interaction): How would a user select filters (date range, project, user, billable status) and immediately see updated reports? Provide a simplified frontend (e.g., React component structure) and a backend API endpoint (e.g., Node.js/Express) for fetching filtered time data.
+Visualization Integration: Suggest how a charting library (e.g., Chart.js, D3.js) could be used to create interactive bar charts or pie charts showing time distribution by project/task. Include a conceptual data transformation function prepareChartData(reportData).
+IV. Seamless Integrations (Conceptual):
+
+Objective: Allow the tool to connect with other popular productivity platforms.
+Specifics to address:
+Project Management Tool Sync (e.g., Asana/Jira conceptual): Describe the high-level OAuth flow for connecting to a PM tool. How would tasks from Asana appear in our timer app, and how could time entries be pushed back? Focus on the API interaction concept rather than specific Asana/Jira API calls.
+Constraint Checklist & Confidence Score:
+
+Propose new features: Yes
+Provide pseudo-code/conceptual code snippets: Yes
+Address Core Time Tracking: Yes
+Address AI-Powered Insights: Yes
+Address Reporting & Visualizations: Yes
+Address Integrations: Yes
+Focus on web application environment: Yes

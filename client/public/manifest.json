@@ -1,0 +1,130 @@
+{
+  "name": "MobileToolsBox - Your Ultimate Mobile Productivity Suite",
+  "short_name": "MobileToolsBox",
+  "description": "10+ essential productivity tools in one beautiful app. From to-do lists to habit tracking, everything you need to stay organized and productive.",
+  "start_url": "/app",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#2563EB",
+  "orientation": "portrait-primary",
+  "scope": "/",
+  "lang": "en",
+  "categories": ["productivity", "utilities", "lifestyle"],
+  "icons": [
+    {
+      "src": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%232563EB' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpath d='M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z'/%3e%3c/svg%3e",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%232563EB' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpath d='M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z'/%3e%3c/svg%3e",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%232563EB'%3e%3cpath d='M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z'/%3e%3c/svg%3e",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 375 812' fill='none'%3e%3crect width='375' height='812' fill='%23f8fafc'/%3e%3crect x='20' y='60' width='335' height='60' rx='12' fill='white'/%3e%3ctext x='40' y='95' fill='%230f172a' font-family='system-ui' font-size='18' font-weight='600'%3eMobileToolsBox%3c/text%3e%3ctext x='40' y='115' fill='%2364748b' font-family='system-ui' font-size='14'%3eChoose your tool%3c/text%3e%3crect x='20' y='140' width='160' height='120' rx='12' fill='white'/%3e%3crect x='40' y='160' width='32' height='32' rx='8' fill='%23dbeafe'/%3e%3ctext x='40' y='210' fill='%230f172a' font-family='system-ui' font-size='14' font-weight='600'%3eTo-Do%3c/text%3e%3ctext x='40' y='230' fill='%2364748b' font-family='system-ui' font-size='12'%3eTasks %26 Lists%3c/text%3e%3crect x='195' y='140' width='160' height='120' rx='12' fill='white'/%3e%3crect x='215' y='160' width='32' height='32' rx='8' fill='%23d1fae5'/%3e%3ctext x='215' y='210' fill='%230f172a' font-family='system-ui' font-size='14' font-weight='600'%3eNotes%3c/text%3e%3ctext x='215' y='230' fill='%2364748b' font-family='system-ui' font-size='12'%3eQuick Notes%3c/text%3e%3c/svg%3e",
+      "sizes": "375x812",
+      "type": "image/svg+xml",
+      "form_factor": "narrow"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Quick Todo",
+      "short_name": "Todo",
+      "description": "Add a new todo item",
+      "url": "/app?tool=todo",
+      "icons": [
+        {
+          "src": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%232563EB' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='9,11 12,14 22,4'/%3e%3cpath d='M21,12v7a2,2 0 0,1 -2,2H5a2,2 0 0,1 -2,-2V5a2,2 0 0,1 2,-2h11'/%3e%3c/svg%3e",
+          "sizes": "96x96",
+          "type": "image/svg+xml"
+        }
+      ]
+    },
+    {
+      "name": "Quick Note",
+      "short_name": "Note",
+      "description": "Create a new note",
+      "url": "/app?tool=notes",
+      "icons": [
+        {
+          "src": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23059669' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpath d='m16.5,3.5l4,4'/%3e%3cpath d='M20.5,8.5v13a2,2 0 0,1 -2,2h-13a2,2 0 0,1 -2,-2v-16a2,2 0 0,1 2,-2h9'/%3e%3c/svg%3e",
+          "sizes": "96x96",
+          "type": "image/svg+xml"
+        }
+      ]
+    },
+    {
+      "name": "Pomodoro Timer",
+      "short_name": "Timer",
+      "description": "Start a focus session",
+      "url": "/app?tool=pomodoro",
+      "icons": [
+        {
+          "src": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23dc2626' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3ccircle cx='12' cy='12' r='10'/%3e%3cpolyline points='12,6 12,12 16,14'/%3e%3c/svg%3e",
+          "sizes": "96x96",
+          "type": "image/svg+xml"
+        }
+      ]
+    },
+    {
+      "name": "Habit Tracker",
+      "short_name": "Habits",
+      "description": "Track your habits",
+      "url": "/app?tool=habit-tracker",
+      "icons": [
+        {
+          "src": "data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%237c3aed' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3ccircle cx='12' cy='12' r='10'/%3e%3ccircle cx='12' cy='12' r='2'/%3e%3cpath d='M12,2 L14,6 L18,4 L16,8 L22,10 L18,12 L22,14 L16,16 L18,20 L14,18 L12,22 L10,18 L6,20 L8,16 L2,14 L6,12 L2,10 L8,8 L6,4 L10,6 Z'/%3e%3c/svg%3e",
+          "sizes": "96x96",
+          "type": "image/svg+xml"
+        }
+      ]
+    }
+  ],
+  "related_applications": [],
+  "prefer_related_applications": false,
+  "dir": "ltr",
+  "iarc_rating_id": "",
+  "edge_side_panel": {
+    "preferred_width": 400
+  },
+  "launch_handler": {
+    "client_mode": "navigate-existing"
+  },
+  "share_target": {
+    "action": "/app",
+    "method": "GET",
+    "params": {
+      "title": "title",
+      "text": "text",
+      "url": "url"
+    }
+  },
+  "protocol_handlers": [
+    {
+      "protocol": "web+mobiletoolsbox",
+      "url": "/app?action=%s"
+    }
+  ],
+  "handle_links": "preferred",
+  "file_handlers": [
+    {
+      "action": "/app?tool=notes",
+      "accept": {
+        "text/plain": [".txt", ".md"],
+        "application/json": [".json"]
+      }
+    }
+  ]
+}

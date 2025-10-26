@@ -1,73 +1,178 @@
-# Welcome to your Lovable project
+# MobileToolsBox - All-in-One Productivity Suite
 
-## Project info
+MobileToolsBox is a comprehensive productivity application featuring 20+ powerful tools for managing tasks, notes, habits, timers, and more. Available on Web, iOS, and Android.
 
-**URL**: https://lovable.dev/projects/366a816c-d505-4ff6-981f-b1bec3d09b1a
+## 🚀 Quick Start
 
-## How can I edit this code?
+### Development
 
-There are several ways of editing your application.
+```bash
+# Install dependencies
+npm install
 
-**Use Lovable**
-
-Simply visit the [Lovable Project](https://lovable.dev/projects/366a816c-d505-4ff6-981f-b1bec3d09b1a) and start prompting.
-
-Changes made via Lovable will be committed automatically to this repo.
-
-**Use your preferred IDE**
-
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
-
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
+# Start development server
 npm run dev
+
+# Open at http://localhost:5000
 ```
 
-**Edit a file directly in GitHub**
+### Production Build
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+```bash
+# Build for production
+npm run build
 
-**Use GitHub Codespaces**
+# Start production server
+npm start
+```
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+## 📱 Mobile Apps
 
-## What technologies are used for this project?
+### iOS
+```bash
+# Build and sync
+npm run build
+npx cap sync ios
 
-This project is built with:
+# Open in Xcode
+npx cap open ios
+```
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+### Android
+```bash
+# Build and sync
+npm run build
+npx cap sync android
 
-## How can I deploy this project?
+# Open in Android Studio
+npx cap open android
+```
 
-Simply open [Lovable](https://lovable.dev/projects/366a816c-d505-4ff6-981f-b1bec3d09b1a) and click on Share -> Publish.
+## 🌟 Features
 
-## Can I connect a custom domain to my Lovable project?
+- ✅ **Todo Management** - Organize tasks with priorities and due dates
+- 📝 **Note Taking** - Rich text editor with markdown support
+- 🎯 **Habit Tracking** - Build positive habits with streaks and analytics
+- 🃏 **Flashcards** - Study efficiently with spaced repetition
+- 🎤 **Voice Recordings** - Quick audio notes and reminders
+- ⏱️ **Pomodoro Timer** - Focus sessions with break management
+- 🔢 **Unit Converter** - Convert between different measurement units
+- 🔐 **Password Generator** - Create secure, memorable passwords
+- 🌍 **World Clock** - Track time across multiple time zones
+- 🧠 **IQ Tester** - Challenge your cognitive abilities
+- 🔢 **Calculator** - Built-in scientific calculator
+- 📷 **QR Scanner** - Scan and generate QR codes
+- 📊 **Project Timer** - Track time spent on projects
+- 📁 **File Converter** - Convert between file formats
+- 🎨 **Theme Customizer** - Personalize your experience
 
-Yes, you can!
+## 📦 Tech Stack
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+- **Frontend**: React, TypeScript, TailwindCSS, Shadcn UI
+- **Backend**: Express.js, Node.js
+- **Database**: PostgreSQL (Drizzle ORM)
+- **Mobile**: Capacitor
+- **Build**: Vite
+- **Auth**: Passport.js
+- **Payments**: Stripe
+- **Email**: SendGrid
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+## 🔧 Configuration
+
+### Environment Variables
+
+Copy `env.production.template` to `.env.production` and fill in your values:
+
+```bash
+cp env.production.template .env.production
+```
+
+Required variables:
+- `DATABASE_URL` - PostgreSQL connection string
+- `SESSION_SECRET` - Session encryption key
+- `SENDGRID_API_KEY` - Email service API key
+- `STRIPE_SECRET_KEY` - Payment processing key
+- `VITE_ADSENSE_CLIENT_ID` - Google AdSense ID
+
+## 📚 Documentation
+
+- [Deployment Instructions](./DEPLOYMENT_INSTRUCTIONS.md) - Full deployment guide
+- [Deployment Checklist](./DEPLOYMENT_CHECKLIST.md) - Step-by-step checklist
+- [Planning Documents](./Planning-Dir/) - Feature specs and guides
+- [Deployment Plan](./multi-platform-deployment-plan.plan.md) - Comprehensive deployment strategy
+
+## 🏗️ Project Structure
+
+```
+├── client/              # Frontend React application
+│   ├── src/
+│   │   ├── components/  # Reusable UI components
+│   │   ├── pages/       # Page components
+│   │   ├── hooks/       # Custom React hooks
+│   │   └── lib/         # Utility functions
+│   └── public/          # Static assets
+├── server/              # Backend Express server
+│   ├── index.ts         # Server entry point
+│   ├── routes.ts        # API routes
+│   └── db.ts            # Database configuration
+├── shared/              # Shared types and schemas
+├── android/             # Android Capacitor project
+├── resources/           # App icons and splash screens
+└── dist/                # Production build output
+```
+
+## 🚀 Deployment
+
+### Web Deployment
+
+See [DEPLOYMENT_INSTRUCTIONS.md](./DEPLOYMENT_INSTRUCTIONS.md) for detailed steps.
+
+Quick start:
+```bash
+# Build
+./build-for-production.sh
+
+# Deploy with PM2
+pm2 start ecosystem.config.js
+```
+
+### Mobile Deployment
+
+```bash
+# Prepare mobile apps
+./build-mobile-apps.sh
+
+# Follow platform-specific instructions in output
+```
+
+## 🔒 Security
+
+- All sensitive credentials in `.env.production` (never committed)
+- SSL/TLS encryption for all connections
+- Secure password hashing with bcrypt
+- CSRF protection enabled
+- Rate limiting on API endpoints
+- Regular security updates
+
+## 📄 License
+
+MIT License - see LICENSE file for details
+
+## 🤝 Contributing
+
+This is a private project. For issues or feature requests, please contact the development team.
+
+## 📧 Support
+
+- Email: support@yourdomain.com
+- Website: https://yourdomain.com
+- Documentation: See Planning-Dir/
+
+## 🎉 Acknowledgments
+
+Built with modern web technologies and best practices for performance, security, and user experience.
+
+---
+
+**Ready to deploy?** Check out the [Deployment Checklist](./DEPLOYMENT_CHECKLIST.md) to get started! 🚀
+

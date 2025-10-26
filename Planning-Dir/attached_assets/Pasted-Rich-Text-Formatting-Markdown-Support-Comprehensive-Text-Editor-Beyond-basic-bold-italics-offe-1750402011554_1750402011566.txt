@@ -1,0 +1,19 @@
+Rich Text Formatting & Markdown Support:
+
+Comprehensive Text Editor: Beyond basic bold/italics, offer rich formatting options like headings, bullet points, numbered lists, blockquotes, code blocks, tables, and diverse font choices (while allowing users to set defaults for consistency).
+Markdown Support (with Preview): Cater to power users who prefer Markdown for speed and structure, with a real-time preview option for visual confirmation.
+Inline Image/Media Embedding: Allow seamless insertion and resizing of images, videos, audio recordings, and even PDFs directly within notes.
+Flexible Organization & Structure:
+
+Nested Folders/Notebooks: Provide a hierarchical system for organizing notes, allowing users to create sub-folders within folders.
+Tags & Smart Tags: Enable robust tagging for cross-referencing and discovery. Consider "smart tags" that automatically apply based on content (e.g., date, keywords).
+Bi-directional Linking/Knowledge Graph: A powerful feature (like Obsidian) where notes can be linked to each other, creating a network of interconnected information. A visual "graph view" can help users see relationships between their ideas.
+Customizable Templates: Offer a gallery of pre-built templates for common note types (meeting notes, daily journals, project plans, etc.), and allow users to create and save their own.
+Outline View/Table of Contents: Automatically generate an outline or table of contents for longer notes, making navigation easy.
+Capture & Input Versatility:
+
+Web Clipper: A robust browser extension to easily save articles, recipes, or any web content directly into the app, with options for full page, simplified view, or just text.
+Voice Notes with Transcription: Allow users to record audio notes and automatically transcribe them to text, with the ability to playback the audio synced to the text.
+Handwriting Recognition (OCR): For stylus users, convert handwritten notes into searchable text. Also, OCR on images to extract text.
+Document Scanning: Utilize device cameras to scan physical documents and integrate them as searchable PDFs within notes.
+Quick Capture Widget/Shortcut: A fast way to jot down ideas without fully opening the app (e.g., a floating widget or system-wide shortcut).

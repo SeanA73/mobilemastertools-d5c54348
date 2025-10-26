@@ -1,24 +1,51 @@
+node_modules
+dist
+.DS_Store
+server/public
+vite.config.ts.*
+*.tar.gz
+
+# Environment files
+.env
+.env.local
+.env.production
+.env.*.local
+
+# Android signing
+android/key.properties
+toolboxpro-release-key.keystore
+*.keystore
+*.jks
+
+# iOS signing
+ios/App/App/GoogleService-Info.plist
+ios/App/Pods
+
+# Build outputs
+android/app/build
+android/app/release
+ios/App/build
+
+# IDE
+.idea
+.vscode
+*.swp
+*.swo
+
 # Logs
 logs
 *.log
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-pnpm-debug.log*
-lerna-debug.log*
 
-node_modules
-dist
-dist-ssr
-*.local
-
-# Editor directories and files
-.vscode/*
-!.vscode/extensions.json
-.idea
+# OS
+Thumbs.db
 .DS_Store
-*.suo
-*.ntvs*
-*.njsproj
-*.sln
-*.sw?
+
+# Temporary files
+*.tmp
+*.temp
+
+# PM2
+ecosystem.config.js.backup

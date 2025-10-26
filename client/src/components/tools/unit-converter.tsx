@@ -604,7 +604,7 @@ export default function UnitConverterTool() {
                     return (
                       <Button
                         key={option.value}
-                        variant={category === option.value ? "default" : "outline"}
+                        variant={category === option.value ? "secondary" : "outline"}
                         className="justify-start"
                         onClick={() => {
                           setCategory(option.value as ConversionCategory);

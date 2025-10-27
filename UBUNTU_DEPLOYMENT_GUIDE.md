@@ -165,12 +165,32 @@ DOMAIN=https://yourdomain.com
 npm run build
 ```
 
-### Step 6: Setup Database (if using PostgreSQL)
+### Step 6: Setup PostgreSQL Database
 
-```bash
-# Run database migrations
-npm run db:push
-```
+**If you're using Neon (recommended):**
+
+1. Get your connection string from Neon dashboard
+2. Add it to `.env.production`:
+   ```bash
+   nano .env.production
+   ```
+   
+   Set your DATABASE_URL:
+   ```env
+   DATABASE_URL=postgresql://username:password@ep-xyz-123.us-east-2.aws.neon.tech/neondb?sslmode=require
+   ```
+
+3. Run database migrations:
+   ```bash
+   npm run db:push
+   ```
+   
+   This creates all tables in your database.
+
+**Troubleshooting:**
+- If "connection refused": Check Neon dashboard → Settings → Allowed IPs → Add your VPS IP
+- If "SSL required": Ensure connection string has `?sslmode=require`
+- Test connection: `node -e "import('pg').then(pg => { const pool = new pg.Pool({connectionString: process.env.DATABASE_URL}); pool.query('SELECT NOW()', (err, res) => { if (err) console.error('Error:', err); else console.log('Success:', res.rows[0]); pool.end(); }); });"`
 
 ---
 
@@ -191,6 +211,7 @@ export default {
     script: './dist/index.js',
     instances: 1,
     exec_mode: 'cluster',
+    env_file: './.env.production',  // Load environment variables from file
     env: {
       NODE_ENV: 'production',
       PORT: 5000
@@ -202,6 +223,8 @@ export default {
   }]
 }
 ```
+
+**Important:** The `env_file: './.env.production'` line tells PM2 to load your DATABASE_URL and other environment variables from the `.env.production` file.
 
 ### Step 2: Start with PM2
 
@@ -464,6 +487,35 @@ cat .env.production | grep DATABASE_URL
 # Test database connection
 node -e "require('pg').Pool({connectionString: process.env.DATABASE_URL}).query('SELECT 1')"
 ```
+
+**If you see "DATABASE_URL not set" warnings:**
+
+1. Verify `.env.production` exists and contains DATABASE_URL
+2. Make sure PM2 is loading the env file - check `ecosystem.config.js` has `env_file: './.env.production'`
+3. Restart PM2 to reload environment:
+   ```bash
+   pm2 restart mobiletoolsbox
+   pm2 logs mobiletoolsbox
+   ```
+
+**If "Connection refused" or "Connection timeout":**
+
+1. Check Neon dashboard → Settings → Allowed IPs
+2. Add your VPS IP address to the allowlist (or use "Allow all IPs" for testing)
+3. Wait 2-3 minutes for IP changes to take effect
+
+**If "SSL required":**
+
+Ensure your connection string includes `?sslmode=require` at the end:
+```env
+DATABASE_URL=postgresql://user:pass@host/db?sslmode=require
+```
+
+**If data isn't persisting:**
+
+1. Verify migrations ran: `npm run db:push`
+2. Check PM2 is loading env variables: `pm2 logs mobiletoolsbox | grep DATABASE_URL`
+3. Restart the app: `pm2 restart mobiletoolsbox`
 
 ---
 

@@ -5,6 +5,7 @@ module.exports = {
     instances: 2,
     exec_mode: 'cluster',
     max_memory_restart: '1G',
+    env_file: './.env.production',
     env: {
       NODE_ENV: 'production',
       PORT: 5000

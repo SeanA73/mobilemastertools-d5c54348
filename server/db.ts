@@ -1,6 +1,6 @@
-import { Pool, neonConfig } from '@neondatabase/serverless';
-import { drizzle } from 'drizzle-orm/neon-serverless';
-import ws from "ws";
+import pkg from 'pg';
+const { Pool } = pkg;
+import { drizzle } from 'drizzle-orm/node-postgres';
 import * as schema from "@shared/schema";
 
 let pool: any;
@@ -8,8 +8,10 @@ let db: any;
 
 // Configure database connection
 if (process.env.DATABASE_URL) {
-  neonConfig.webSocketConstructor = ws;
-  pool = new Pool({ connectionString: process.env.DATABASE_URL });
+  pool = new Pool({ 
+    connectionString: process.env.DATABASE_URL,
+    ssl: { rejectUnauthorized: false }
+  });
   db = drizzle({ client: pool, schema });
 } else {
   console.warn("⚠️  DATABASE_URL not set. Using mock database for development.");

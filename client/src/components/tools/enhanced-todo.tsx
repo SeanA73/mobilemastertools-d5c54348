@@ -324,12 +324,15 @@ export default function EnhancedTodoTool() {
   });
 
   // Query for fetching todos from server (will fallback to localStorage)
-  const { data: serverTodos = [], isLoading } = useQuery({
+  // Non-blocking - show localTodos immediately
+  const { data: serverTodos = [], isLoading: todosLoading } = useQuery({
     queryKey: ["/api/todos"],
-    queryFn: () => apiRequest("GET", "/api/todos").then(res => res.json()).catch(() => [])
+    retry: false,
+    staleTime: 30000,
   });
   
   // Use server todos if available, otherwise use localStorage
+  // Don't wait for server - show localTodos immediately
   const todos = serverTodos.length > 0 ? serverTodos : localTodos;
 
   const createTodoMutation = useMutation({
@@ -569,7 +572,11 @@ export default function EnhancedTodoTool() {
     );
   };
 
-  if (isLoading) {
+  // Only show loading if we have no local todos AND server is still loading
+  // This prevents blocking the UI when localStorage has data
+  const shouldShowLoading = todosLoading && localTodos.length === 0 && serverTodos.length === 0;
+  
+  if (shouldShowLoading) {
     return (
       <div className="max-w-6xl mx-auto space-y-6">
         <div className="h-8 bg-gray-200 rounded animate-pulse"></div>

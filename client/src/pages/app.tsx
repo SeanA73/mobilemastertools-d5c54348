@@ -1,10 +1,9 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, lazy, Suspense } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Link } from "wouter";
 import Navbar from "@/components/navbar";
-// DemoModeBanner removed - site is free to use
 import PremiumFeatureGuard from "@/components/premium-feature-guard";
 import AdBanner from "@/components/ad-banner";
 import UserTestingControls from "@/components/user-testing-controls";
@@ -16,20 +15,23 @@ import ToolCard from "@/components/tool-card";
 import DonationButton from "@/components/donation-button";
 import { useAuth } from "@/hooks/useAuth";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
-import EnhancedTodoTool from "@/components/tools/enhanced-todo";
-import EnhancedNotesTool from "@/components/tools/enhanced-notes";
-import EnhancedVoiceRecorderTool from "@/components/tools/enhanced-voice-recorder";
-import CalculatorTool from "@/components/tools/calculator";
-import UnitConverterTool from "@/components/tools/unit-converter";
-import WorldClockTool from "@/components/tools/world-clock";
-import FlashcardsTool from "@/components/tools/flashcards";
-import PomodoroTool from "@/components/tools/pomodoro";
-import HabitTrackerTool from "@/components/tools/habit-tracker";
-import PasswordGeneratorTool from "@/components/tools/password-generator";
-import QRScannerTool from "@/components/tools/qr-scanner";
-import FileConverterTool from "@/components/tools/file-converter";
-import EnhancedProjectTimer from "@/components/tools/enhanced-project-timer";
-import EnhancedIQTesterV2 from "@/components/tools/enhanced-iq-tester-v2";
+import { ErrorBoundary } from "@/components/error-boundary";
+
+// Lazy load all tool components - only load when needed
+const EnhancedTodoTool = lazy(() => import("@/components/tools/enhanced-todo").then(m => ({ default: m.default })));
+const EnhancedNotesTool = lazy(() => import("@/components/tools/enhanced-notes").then(m => ({ default: m.default })));
+const EnhancedVoiceRecorderTool = lazy(() => import("@/components/tools/enhanced-voice-recorder").then(m => ({ default: m.default })));
+const CalculatorTool = lazy(() => import("@/components/tools/calculator").then(m => ({ default: m.default })));
+const UnitConverterTool = lazy(() => import("@/components/tools/unit-converter").then(m => ({ default: m.default })));
+const WorldClockTool = lazy(() => import("@/components/tools/world-clock").then(m => ({ default: m.default })));
+const FlashcardsTool = lazy(() => import("@/components/tools/flashcards").then(m => ({ default: m.default })));
+const PomodoroTool = lazy(() => import("@/components/tools/pomodoro").then(m => ({ default: m.default })));
+const HabitTrackerTool = lazy(() => import("@/components/tools/habit-tracker").then(m => ({ default: m.default })));
+const PasswordGeneratorTool = lazy(() => import("@/components/tools/password-generator").then(m => ({ default: m.default })));
+const QRScannerTool = lazy(() => import("@/components/tools/qr-scanner").then(m => ({ default: m.default })));
+const FileConverterTool = lazy(() => import("@/components/tools/file-converter").then(m => ({ default: m.default })));
+const EnhancedProjectTimer = lazy(() => import("@/components/tools/enhanced-project-timer").then(m => ({ default: m.default })));
+const EnhancedIQTesterV2 = lazy(() => import("@/components/tools/enhanced-iq-tester-v2").then(m => ({ default: m.default })));
 import { 
   CheckSquare, Edit3, Mic, Calculator, Clock, Repeat, 
   Globe, Layers, Target, Timer, Home, Star, Key, 
@@ -222,14 +224,25 @@ export default function App() {
   const [adSenseLoaded, setAdSenseLoaded] = useState(false);
   const { isAdmin } = useAuth();
 
-  // Initialize AdSense
+  // Initialize AdSense - defer to not block initial render
   useEffect(() => {
     const initAds = async () => {
       try {
         // Only initialize in browser environment
         if (typeof window !== 'undefined') {
-          await initializeAdSense();
-          setAdSenseLoaded(true);
+          // Wait for idle time to not block main thread
+          if ('requestIdleCallback' in window) {
+            requestIdleCallback(async () => {
+              await initializeAdSense();
+              setAdSenseLoaded(true);
+            }, { timeout: 2000 });
+          } else {
+            // Fallback: delay by 500ms after page load
+            setTimeout(async () => {
+              await initializeAdSense();
+              setAdSenseLoaded(true);
+            }, 500);
+          }
         }
       } catch (error) {
         console.log('AdSense not available:', error);
@@ -238,9 +251,7 @@ export default function App() {
       }
     };
     
-    // Add a small delay to ensure DOM is ready
-    const timer = setTimeout(initAds, 100);
-    return () => clearTimeout(timer);
+    initAds();
   }, []);
 
   // Filter tools based on category and admin access
@@ -264,6 +275,22 @@ export default function App() {
   const categories = getAllCategories(availableTools);
   const selectedToolData = availableTools.find(tool => tool.id === selectedTool);
 
+  // Loading skeleton for lazy-loaded tools
+  const ToolLoadingSkeleton = () => (
+    <div className="max-w-7xl mx-auto space-y-6 p-4">
+      <div className="h-8 bg-gray-200 rounded animate-pulse w-1/3"></div>
+      <Card>
+        <CardContent className="pt-6">
+          <div className="space-y-4">
+            <div className="h-10 bg-gray-200 rounded animate-pulse"></div>
+            <div className="h-64 bg-gray-200 rounded animate-pulse"></div>
+            <div className="h-10 bg-gray-200 rounded animate-pulse w-1/2"></div>
+          </div>
+        </CardContent>
+      </Card>
+    </div>
+  );
+
   if (selectedTool && selectedToolData) {
     const ToolComponent = selectedToolData.component;
     
@@ -278,9 +305,13 @@ export default function App() {
           isAdmin={isAdmin}
         />
         <div className="p-4">
-          <PremiumFeatureGuard>
-            <ToolComponent />
-          </PremiumFeatureGuard>
+          <ErrorBoundary>
+            <Suspense fallback={<ToolLoadingSkeleton />}>
+              <PremiumFeatureGuard>
+                <ToolComponent />
+              </PremiumFeatureGuard>
+            </Suspense>
+          </ErrorBoundary>
         </div>
 
         {/* Dialogs */}

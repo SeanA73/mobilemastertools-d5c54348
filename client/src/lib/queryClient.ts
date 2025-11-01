@@ -41,14 +41,56 @@ export const getQueryFn: <T>(options: {
     return await res.json();
   };
 
+// Helper function to add timeout to fetch requests
+async function fetchWithTimeout(url: string, options: RequestInit = {}, timeoutMs = 3000): Promise<Response> {
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
+  
+  try {
+    const response = await fetch(url, {
+      ...options,
+      signal: controller.signal,
+    });
+    clearTimeout(timeoutId);
+    return response;
+  } catch (error) {
+    clearTimeout(timeoutId);
+    if (error instanceof Error && error.name === 'AbortError') {
+      throw new Error(`Request timeout after ${timeoutMs}ms`);
+    }
+    throw error;
+  }
+}
+
 export const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      queryFn: getQueryFn({ on401: "throw" }),
+      queryFn: async ({ queryKey }) => {
+        const url = queryKey[0] as string;
+        try {
+          const res = await fetchWithTimeout(url, { credentials: "include" }, 3000);
+          
+          if (res.status === 401) {
+            return null;
+          }
+          
+          if (!res.ok) {
+            throw new Error(`${res.status}: ${res.statusText}`);
+          }
+          
+          return await res.json();
+        } catch (error) {
+          // Return empty array/object instead of throwing to prevent blocking
+          console.warn(`Query failed for ${url}:`, error);
+          return [];
+        }
+      },
       refetchInterval: false,
       refetchOnWindowFocus: false,
-      staleTime: Infinity,
+      staleTime: 60000, // 1 minute - shorter than Infinity but still cached
+      gcTime: 300000, // 5 minutes cache time
       retry: false,
+      retryOnMount: false,
     },
     mutations: {
       retry: false,

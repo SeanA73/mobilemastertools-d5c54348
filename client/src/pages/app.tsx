@@ -4,7 +4,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Link } from "wouter";
 import Navbar from "@/components/navbar";
-import DemoModeBanner from "@/components/demo-mode-banner";
+// DemoModeBanner removed - site is free to use
 import PremiumFeatureGuard from "@/components/premium-feature-guard";
 import AdBanner from "@/components/ad-banner";
 import UserTestingControls from "@/components/user-testing-controls";
@@ -311,7 +311,7 @@ export default function App() {
       />
       
       <div className="p-4 max-w-7xl mx-auto">
-        <DemoModeBanner />
+        {/* DemoModeBanner removed - site is free to use */}
         
         {/* Compact Hero Section */}
         <div className="mb-6">

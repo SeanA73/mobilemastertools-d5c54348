@@ -76,10 +76,18 @@ export function serveStatic(app: Express) {
     );
   }
 
-  app.use(express.static(distPath));
+  // Serve static files with caching headers
+  app.use(express.static(distPath, {
+    maxAge: "7d",
+    immutable: true,
+    etag: true,
+    lastModified: true,
+  }));
 
   // fall through to index.html if the file doesn't exist
   app.use("*", (_req, res) => {
+    // Cache index.html for shorter duration (1 hour) since it can change
+    res.setHeader("Cache-Control", "public, max-age=3600");
     res.sendFile(path.resolve(distPath, "index.html"));
   });
 }

@@ -53,6 +53,38 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Lightweight bootstrap endpoint for checking if user has any data
+  // Returns just counts to avoid loading full data sets on initial page load
+  app.get('/api/bootstrap', async (req: any, res) => {
+    try {
+      const userId = req.user.claims.sub;
+      
+      // Use Promise.allSettled to avoid blocking if any query fails
+      const [todos, notes, habits, voiceRecordings, flashcardDecks] = await Promise.allSettled([
+        storage.getTodosByUserId(userId).then(t => t.length).catch(() => 0),
+        storage.getNotesByUserId(userId).then(n => n.length).catch(() => 0),
+        storage.getHabitsByUserId(userId).then(h => h.length).catch(() => 0),
+        storage.getVoiceRecordingsByUserId(userId).then(v => v.length).catch(() => 0),
+        storage.getFlashcardDecksByUserId(userId).then(f => f.length).catch(() => 0),
+      ]);
+
+      const counts = {
+        todos: todos.status === 'fulfilled' ? todos.value : 0,
+        notes: notes.status === 'fulfilled' ? notes.value : 0,
+        habits: habits.status === 'fulfilled' ? habits.value : 0,
+        voiceRecordings: voiceRecordings.status === 'fulfilled' ? voiceRecordings.value : 0,
+        flashcardDecks: flashcardDecks.status === 'fulfilled' ? flashcardDecks.value : 0,
+      };
+
+      const hasData = Object.values(counts).some(count => count > 0);
+
+      res.json({ hasData, counts });
+    } catch (error) {
+      console.error("Error in bootstrap:", error);
+      res.json({ hasData: false, counts: {} });
+    }
+  });
+
   // Simple user switching for demo
   app.post('/api/switch-user', async (req: any, res) => {
     const { userId } = req.body;

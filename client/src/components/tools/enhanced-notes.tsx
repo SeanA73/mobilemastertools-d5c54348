@@ -301,7 +301,7 @@ export default function EnhancedNotesTool() {
   // Local storage for notes (fallback when no database)
   const [localNotes, setLocalNotes] = useState<Note[]>([]);
   
-  // Load from localStorage on mount
+  // Load from localStorage on mount - fast synchronous read
   useEffect(() => {
     const stored = localStorage.getItem('enhanced-notes');
     if (stored) {
@@ -346,20 +346,49 @@ export default function EnhancedNotesTool() {
   });
 
   // Query for fetching notes from server (will fallback to localStorage)
-  const { data: serverNotes = [], isLoading } = useQuery({
+  // Add timeout and make it non-blocking - show UI immediately with localNotes
+  const { data: serverNotes = [], isLoading: notesLoading } = useQuery({
     queryKey: ["/api/notes"],
-    queryFn: () => apiRequest("GET", "/api/notes").then(res => res.json()).catch(() => [])
+    queryFn: async () => {
+      // Add timeout to prevent long waits
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 3000); // 3 second timeout
+      
+      try {
+        const res = await fetch("/api/notes", {
+          credentials: "include",
+          signal: controller.signal,
+        });
+        clearTimeout(timeoutId);
+        if (res.ok) {
+          return await res.json();
+        }
+        return [];
+      } catch (error) {
+        clearTimeout(timeoutId);
+        return []; // Return empty array on timeout/error
+      }
+    },
+    retry: false,
+    staleTime: 30000, // Cache for 30 seconds
+    gcTime: 60000, // Keep in cache for 1 minute
   });
   
   // Use server notes if available, otherwise use localStorage
+  // Don't wait for server - show localNotes immediately
   const notes = serverNotes.length > 0 ? serverNotes : localNotes;
 
+  // Make these queries non-blocking - they'll fail gracefully
   const { data: folders = [] } = useQuery({
     queryKey: ["/api/note-folders"],
+    retry: false,
+    enabled: false, // Disable by default - endpoints don't exist yet
   });
 
   const { data: templates = [] } = useQuery({
     queryKey: ["/api/note-templates"],
+    retry: false,
+    enabled: false, // Disable by default - endpoints don't exist yet
   });
 
   const createNoteMutation = useMutation({
@@ -515,7 +544,11 @@ export default function EnhancedNotesTool() {
     setShowTemplates(false);
   };
 
-  if (isLoading) {
+  // Only show loading if we have no local notes AND server is still loading
+  // This prevents blocking the UI when localStorage has data
+  const shouldShowLoading = notesLoading && localNotes.length === 0 && serverNotes.length === 0;
+  
+  if (shouldShowLoading) {
     return (
       <div className="max-w-7xl mx-auto space-y-6">
         <div className="h-8 bg-gray-200 rounded animate-pulse"></div>
